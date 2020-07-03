@@ -35,6 +35,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private var _mode: Mode;
     private var _anchorAngle: Float
     private var _startAngle: Float
+    private var _centerIconPadding: Float
     private var _dividerStrokeWidth: Float
     private var _arcBackgroundColor: Int
     private var _selectedArcBackgroundColor: Int
@@ -48,19 +49,20 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 _mode = Mode.values()[getInt(R.styleable.WheelView_mode, 0)]
                 _anchorAngle = getFloat(R.styleable.WheelView_anchorAngle, 270f)
                 _startAngle = getFloat(R.styleable.WheelView_startAngle, 0f)
-                _dividerStrokeWidth = getDimensionPixelSize(R.styleable.WheelView_dividerStrokeWidth, dpToPx(12).toInt()).toFloat()
+                _dividerStrokeWidth = getDimensionPixelSize(R.styleable.WheelView_dividerStrokeWidth, dpToPx(12f)).toFloat()
                 _arcBackgroundColor = getColor(R.styleable.WheelView_ArcBackgroundColor, Color.parseColor("#F7F8FB"))
                 _selectedArcBackgroundColor = getColor(R.styleable.WheelView_selectedArcBackgroundColor, Color.parseColor("#48AEBF"))
                 _centerIconTint = getColor(R.styleable.WheelView_centerIconTint, Color.WHITE)
                 _centerIcon = getDrawable(R.styleable.WheelView_centerIcon)
+                _centerIconPadding = getDimensionPixelSize(R.styleable.WheelView_centerIconPadding, dpToPx(12f)).toFloat()
             }
     }
 
     var titles
         get() = _titles
         set(value) {
-            _titles = value
-            arcs = _titles.map { Arc(it,false,0f,0f) }
+            _titles = value // create arcs from titles
+            arcs = _titles.map { Arc(it, false, 0f, 0f) }
             refresh()
         }
 
@@ -75,6 +77,8 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     var startAngle
         get() =
             when (mode) {
+                // get start angle so currently focused index is in center of anchor angle
+                // 360s to normalize angle between 0 to 60
                 Mode.ANIMATE_TO_ANCHOR -> (anchorAngle - (focusedIndex * 360f / _titles.size + 360f / (2 * _titles.size)) + 360) % 360
                 Mode.STATIC -> _startAngle
             }
@@ -127,19 +131,23 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 refresh()
         }
 
+    //listeners
     var selectListener: ((Int) -> Unit)? = null
     var centerClickListener: (() -> Unit)? = null
 
+    //mask filter for shadow
     private val blurMaskFilter = BlurMaskFilter(10f, BlurMaskFilter.Blur.NORMAL)
+
+    //paints
+    private val arcPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val bgCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color = Color.WHITE
     }
 
-    private var arcs = listOf<Arc>()
     private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        textSize = dpToPx(14)
+        textSize = dpToPx(14f).toFloat()
     }
     private val bgCircleShadowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         maskFilter = blurMaskFilter
@@ -147,6 +155,14 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         color = Color.parseColor("#2C000000")
     }
 
+    //shapes
+    private var arcs = listOf<Arc>()
+    private lateinit var bgCircle: Circle
+    private lateinit var centerCircle: Circle
+    private lateinit var arcStrokeRect: RectF
+    private lateinit var arcRect: RectF
+
+    // detect click in the wheel
     private val gestureDetector = GestureDetectorCompat(context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent?) = true
         override fun onSingleTapUp(e: MotionEvent?): Boolean {
@@ -155,16 +171,9 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     })
 
-    private val arcPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private lateinit var bgCircle: Circle
-    private lateinit var centerCircle: Circle
-    private lateinit var arcStrokeRect: RectF
-    private lateinit var arcRect: RectF
-
-
     private fun animateWheelToNewAngle(prevStartAngle: Float) {
         val startAngle = this.startAngle.let { abgle ->
-            val paths = listOf(
+            val paths = listOf( // all the possible angles
                 abgle,
                 abgle + 360,
                 (abgle + 360) % 360,
@@ -174,6 +183,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             paths.map { it to abs(prevStartAngle - it) }.minBy { it.second }!!.first // find the min possible path to prev start angle
         }
 
+        //animate between prev value and new value
         ValueAnimator.ofFloat(prevStartAngle, startAngle).apply {
             duration = 500
             interpolator = AccelerateInterpolator()
@@ -184,8 +194,9 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     }
 
+
     private fun refresh(sAngle: Float = startAngle) {
-        val backgroundCircleRadius = (min(width, height) / 2.1).toFloat()
+        val backgroundCircleRadius = min(width, height) / 2.1f  //2.1 to make some space for the bg shadow
         val arcStrokeRadius = backgroundCircleRadius - dividerStrokeWidth / 2
         val centerX = width / 2f
         val centerY = height / 2f
@@ -197,11 +208,11 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         arcs = arcs.mapIndexed { index, arc ->
             angle += sweepAngle
             arc.copy(selected = index == focusedIndex, startAngle = angle - sweepAngle, sweepAngle = sweepAngle)
-        }.toMutableList()
+        }
         bgCircle = Circle(centerX, centerY, backgroundCircleRadius)
         centerCircle = Circle(centerX, centerY, backgroundCircleRadius * .3f).also {
-            val padding = it.radius - dividerStrokeWidth * 1.6f
-            centerIcon?.bounds = RectF(it.cx - padding, it.cy - padding, it.cx + padding, it.cy + padding).toRect()
+            val width = it.radius - dividerStrokeWidth / 2 - _centerIconPadding
+            centerIcon?.bounds = RectF(it.cx - width / 2, it.cy - width / 2, it.cx + width / 2, it.cy + width / 2).toRect()
         }
         centerIcon?.apply {
             DrawableCompat.setTint(this, centerIconTint)
@@ -255,11 +266,11 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             val angle = Math.toRadians(it.startAngle + it.sweepAngle / 2.0)
             val x = arcRect.centerX() + radius * cos(angle).toFloat()
             val y = arcRect.centerY() + radius * sin(angle).toFloat()
-            val mTextLayout = StaticLayout(it.text, textPaint, 200, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false)
+            val textLayout = StaticLayout(it.text, textPaint, 200, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false)
             textPaint.color = if (it.selected) Color.WHITE else Color.BLACK
             canvas.save()
-            canvas.translate(x - mTextLayout.width / 2, y - mTextLayout.height / 2)
-            mTextLayout.draw(canvas)
+            canvas.translate(x - textLayout.width / 2, y - textLayout.height / 2)
+            textLayout.draw(canvas)
             canvas.restore()
         }
 
@@ -268,10 +279,11 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     private fun onClickOnWheel(event: MotionEvent) {
-        if (event.inside(centerCircle.cx, centerCircle.cy, centerCircle.radius)) {
+        if (!event.inside(centerCircle.cx, centerCircle.cy, bgCircle.radius)) return // exclude clicks outside the large circle
+        if (event.inside(centerCircle.cx, centerCircle.cy, centerCircle.radius)) { // check for the center circle first
             centerClickListener?.let { it() }
         }
-        for ((index, arc) in arcs.withIndex()) {
+        for ((index, arc) in arcs.withIndex()) { // check the arcs
             if (event.inside(arcRect, arc.startAngle, arc.sweepAngle)) {
                 focusedIndex = index
                 selectListener?.let { it(index) }

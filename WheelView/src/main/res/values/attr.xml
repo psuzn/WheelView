@@ -9,6 +9,7 @@
         <attr name="anchorAngle" format="float" />
         <attr name="startAngle" format="float" />
         <attr name="animationDuration" format="float" />
+        <attr name="centerIconPadding" format="dimension" />
         <attr name="mode" format="enum">
             <enum name="ANIMATE_TO_ANCHOR" value="0" />
             <enum name="STATIC" value="1" />

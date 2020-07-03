@@ -7,8 +7,8 @@ import kotlin.math.atan2
 import kotlin.math.sqrt
 
 
-fun View.dpToPx(dp: Int): Float {
-    return dp * context.resources.displayMetrics.density
+fun View.dpToPx(dp: Float): Int {
+    return (dp * context.resources.displayMetrics.density).toInt()
 }
 
 fun MotionEvent.inside(bounds: RectF, startAngle: Float, sweepAngle: Float): Boolean {
