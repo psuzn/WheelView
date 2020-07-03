@@ -1,0 +1,3 @@
+rootProject.name = "WheelViewDemo"
+include ':app'
+include ':WheelView'

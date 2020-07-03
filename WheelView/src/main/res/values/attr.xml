@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WheelView">
+        <attr name="dividerStrokeWidth" format="dimension" />
+        <attr name="selectedArcBackgroundColor" format="color" />
+        <attr name="ArcBackgroundColor" format="color" />
+        <attr name="centerIconTint" format="color" />
+        <attr name="centerIcon" format="reference" />
+        <attr name="anchorAngle" format="float" />
+        <attr name="startAngle" format="float" />
+        <attr name="animationDuration" format="float" />
+        <attr name="mode" format="enum">
+            <enum name="ANIMATE_TO_ANCHOR" value="0" />
+            <enum name="STATIC" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>
