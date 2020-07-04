@@ -1,15 +1,6 @@
 
 # WheelView  
-  
-  
-  
-```  
-     wheelView.titles = listOf("Android", "IOS", "Mac", "Windows")  
-```  
-  
-  
-# BlobBackgroundLayout  
-Android Layout Library with animated Blob Background  
+Android UI library to create wheels
   
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://source.android.com/setup/start/build-numbers)  
   <br>
