@@ -4,7 +4,7 @@ Android UI library to create wheels
   
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![](https://jitpack.io/v/psuzn/WheelView.svg)](https://jitpack.io/#psuzn/WheelView)  [![API](https://img.shields.io/badge/API-19%2B-blue.svg?style=flat)](https://source.android.com/setup/start/build-numbers)  
   <br>
-<img id="mode" src="https://drive.google.com/uc?export=view&id=11CQKcX7M9PBXxUKBkYdWBRzF3Fi1oZ2J" width="200" />&ensp;&ensp;&ensp;&ensp;&ensp;<img src="https://drive.google.com/uc?export=view&id=1L_65uTto-5kjRTL3zTqP4trumCrMvlWh" width="200" />  
+<img id="mode" src="./media/demo-animate-anchor-315.gif.gif" width="200" />&ensp;&ensp;&ensp;&ensp;&ensp;<img src="./media/demo-static.gif.gif" width="200" />  
 ANIMATE_TO_ANCHOR   &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;  STATIC
 ## Usage  
 #### Set up the dependency  
