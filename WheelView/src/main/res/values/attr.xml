@@ -3,13 +3,16 @@
     <declare-styleable name="WheelView">
         <attr name="dividerStrokeWidth" format="dimension" />
         <attr name="selectedArcBackgroundColor" format="color" />
-        <attr name="ArcBackgroundColor" format="color" />
+        <attr name="arcBackgroundColor" format="color" />
         <attr name="centerIconTint" format="color" />
         <attr name="centerIcon" format="reference" />
         <attr name="anchorAngle" format="float" />
         <attr name="startAngle" format="float" />
         <attr name="animationDuration" format="float" />
         <attr name="centerIconPadding" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="selectedTextColor" format="color" />
         <attr name="mode" format="enum">
             <enum name="ANIMATE_TO_ANCHOR" value="0" />
             <enum name="STATIC" value="1" />

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WheelViewDemo</string>
+    <string name="type">startAngle=\"315\"</string>
 </resources>

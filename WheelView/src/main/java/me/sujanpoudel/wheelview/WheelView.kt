@@ -40,6 +40,10 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private var _arcBackgroundColor: Int
     private var _selectedArcBackgroundColor: Int
     private var _centerIconTint: Int
+    private var _textSize:Int
+    private var _textColor:Int
+    private var _selectedTextColor:Int
+    private var _animationduration:Long
     private var _centerIcon: Drawable?
     private var _titles = listOf<String>()
 
@@ -50,11 +54,15 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 _anchorAngle = getFloat(R.styleable.WheelView_anchorAngle, 270f)
                 _startAngle = getFloat(R.styleable.WheelView_startAngle, 0f)
                 _dividerStrokeWidth = getDimensionPixelSize(R.styleable.WheelView_dividerStrokeWidth, dpToPx(12f)).toFloat()
-                _arcBackgroundColor = getColor(R.styleable.WheelView_ArcBackgroundColor, Color.parseColor("#F7F8FB"))
+                _arcBackgroundColor = getColor(R.styleable.WheelView_arcBackgroundColor, Color.parseColor("#F7F8FB"))
                 _selectedArcBackgroundColor = getColor(R.styleable.WheelView_selectedArcBackgroundColor, Color.parseColor("#48AEBF"))
                 _centerIconTint = getColor(R.styleable.WheelView_centerIconTint, Color.WHITE)
                 _centerIcon = getDrawable(R.styleable.WheelView_centerIcon)
                 _centerIconPadding = getDimensionPixelSize(R.styleable.WheelView_centerIconPadding, dpToPx(12f)).toFloat()
+                _textSize = getDimensionPixelSize(R.styleable.WheelView_textSize,dpToPx(14f))
+                _textColor = getColor(R.styleable.WheelView_textColor, Color.BLACK)
+                _selectedTextColor= getColor(R.styleable.WheelView_selectedTextColor, Color.WHITE)
+                _animationduration = getFloat(R.styleable.WheelView_animationDuration,500f).toLong()
             }
     }
 
@@ -67,10 +75,32 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
 
     var mode = _mode
+    var animationDuration = _animationduration
     var anchorAngle
         get() = _anchorAngle
         set(value) {
             _anchorAngle = value
+            refresh()
+        }
+
+    var textSize
+    get() = _textSize
+    set(value) {
+        _textSize = value
+        refresh()
+    }
+
+    var textColor
+        get() = _textColor
+        set(value) {
+            _textColor = value
+            refresh()
+        }
+
+    var selectedTextColor
+        get() = _selectedTextColor
+        set(value) {
+            _selectedTextColor = value
             refresh()
         }
 
@@ -185,7 +215,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
         //animate between prev value and new value
         ValueAnimator.ofFloat(prevStartAngle, startAngle).apply {
-            duration = 500
+            duration = animationDuration
             interpolator = AccelerateInterpolator()
             start()
             addUpdateListener {
@@ -267,7 +297,8 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             val x = arcRect.centerX() + radius * cos(angle).toFloat()
             val y = arcRect.centerY() + radius * sin(angle).toFloat()
             val textLayout = StaticLayout(it.text, textPaint, 200, Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false)
-            textPaint.color = if (it.selected) Color.WHITE else Color.BLACK
+            textPaint.color = if (it.selected) selectedTextColor else textColor
+            textPaint.textSize = _textSize.toFloat()
             canvas.save()
             canvas.translate(x - textLayout.width / 2, y - textLayout.height / 2)
             textLayout.draw(canvas)
