@@ -23,7 +23,7 @@ implementation 'com.github.psuzn:WheelView:0.1.0'
 ```  
   
 #### Use a `WheelView`  in your layout.  
-```  
+```xml  
 <me.sujanpoudel.wheelview.WheelView
     android:id="@+id/wheel_view"
     android:layout_width="match_parent"
@@ -39,7 +39,7 @@ implementation 'com.github.psuzn:WheelView:0.1.0'
 ```  
   
 #### Setup arc titles
-```  
+```kotlin
 ...
 setContentView(R.layout.activity_main)  
 val wheelView = findViewById<WheelView>(R.id.wheel_view)  
