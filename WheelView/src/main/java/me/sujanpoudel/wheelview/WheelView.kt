@@ -12,6 +12,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.LinearInterpolator
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toRect
 import androidx.core.view.GestureDetectorCompat
@@ -109,7 +110,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         get() =
             when (mode) {
                 // get start angle so currently focused index is in center of anchor angle
-                // 360s to normalize angle between 0 to 60
+                // 360s to normalize angle between 0 to 360
                 Mode.ANIMATE_TO_ANCHOR -> (anchorAngle - (focusedIndex * 360f / _titles.size + 360f / (2 * _titles.size)) + 360) % 360
                 Mode.STATIC -> _startAngle
             }
@@ -211,13 +212,15 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 abgle - 360,
                 (abgle - 360) % 360
             )
-            paths.map { it to abs(prevStartAngle - it) }.minBy { it.second }!!.first // find the min possible path to prev start angle
+            paths.map { it to abs(prevStartAngle - it) }
+                .minBy { it.second }!!
+                .first // find the min possible path to prev start angle
         }
 
         //animate between prev value and new value
         ValueAnimator.ofFloat(prevStartAngle, startAngle).apply {
             duration = animationDuration
-            interpolator = AccelerateInterpolator()
+            interpolator = LinearInterpolator()
             start()
             addUpdateListener {
                 refresh(it.animatedValue as Float)
