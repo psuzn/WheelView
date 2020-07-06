@@ -224,7 +224,6 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     }
 
-
     private fun refresh(sAngle: Float = startAngle) {
         val backgroundCircleRadius = min(width, height) / 2.1f  //2.1 to make some space for the bg shadow
         val arcStrokeRadius = backgroundCircleRadius - dividerStrokeWidth / 2
