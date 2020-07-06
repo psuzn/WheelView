@@ -28,12 +28,12 @@
         app:wheelCenterIcon="@drawable/ic_baseline_add_24"
         app:wheelCenterIconPadding="16dp"
         app:wheelCenterIconTint="@color/white"
-        app:wheelAnchorAngle="45"
+        app:wheelAnchorAngle="270"
         app:wheelStartAngle="315"
         app:wheelTextSize="16sp"
         app:wheelSelectedTextColor="#FFF"
         app:wheelTextColor="#000000"
-        app:wheelAnimationDuration="500"
+        app:wheelAnimationDuration="800"
         app:wheelMode="ANIMATE_TO_ANCHOR"
         />
 

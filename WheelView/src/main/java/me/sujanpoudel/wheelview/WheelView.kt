@@ -50,7 +50,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     init {
         context.theme.obtainStyledAttributes(attrs, R.styleable.WheelView, 0, 0)
             .apply {
-                _mode = Mode.values()[getInt(R.styleable.WheelView_wheelMode, 0)]
+                _mode = Mode.values()[getInt(R.styleable.WheelView_wheelMode, Mode.ANIMATE_TO_ANCHOR.ordinal)]
                 _anchorAngle = getFloat(R.styleable.WheelView_wheelAnchorAngle, 270f)
                 _startAngle = getFloat(R.styleable.WheelView_wheelStartAngle, 0f)
                 _dividerStrokeWidth = getDimensionPixelSize(R.styleable.WheelView_wheelDividerStrokeWidth, dpToPx(12f)).toFloat()
@@ -64,6 +64,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 _selectedTextColor = getColor(R.styleable.WheelView_wheelSelectedTextColor, Color.WHITE)
                 _animationduration = getFloat(R.styleable.WheelView_wheelAnimationDuration, 500f).toLong()
             }
+            .recycle()
     }
 
     var titles
