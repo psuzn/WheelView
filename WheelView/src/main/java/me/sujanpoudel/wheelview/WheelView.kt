@@ -40,29 +40,29 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private var _arcBackgroundColor: Int
     private var _selectedArcBackgroundColor: Int
     private var _centerIconTint: Int
-    private var _textSize:Int
-    private var _textColor:Int
-    private var _selectedTextColor:Int
-    private var _animationduration:Long
+    private var _textSize: Int
+    private var _textColor: Int
+    private var _selectedTextColor: Int
+    private var _animationduration: Long
     private var _centerIcon: Drawable?
     private var _titles = listOf<String>()
 
     init {
         context.theme.obtainStyledAttributes(attrs, R.styleable.WheelView, 0, 0)
             .apply {
-                _mode = Mode.values()[getInt(R.styleable.WheelView_mode, 0)]
-                _anchorAngle = getFloat(R.styleable.WheelView_anchorAngle, 270f)
-                _startAngle = getFloat(R.styleable.WheelView_startAngle, 0f)
-                _dividerStrokeWidth = getDimensionPixelSize(R.styleable.WheelView_dividerStrokeWidth, dpToPx(12f)).toFloat()
-                _arcBackgroundColor = getColor(R.styleable.WheelView_arcBackgroundColor, Color.parseColor("#F7F8FB"))
-                _selectedArcBackgroundColor = getColor(R.styleable.WheelView_selectedArcBackgroundColor, Color.parseColor("#48AEBF"))
-                _centerIconTint = getColor(R.styleable.WheelView_centerIconTint, Color.WHITE)
-                _centerIcon = getDrawable(R.styleable.WheelView_centerIcon)
-                _centerIconPadding = getDimensionPixelSize(R.styleable.WheelView_centerIconPadding, dpToPx(12f)).toFloat()
-                _textSize = getDimensionPixelSize(R.styleable.WheelView_textSize,dpToPx(14f))
-                _textColor = getColor(R.styleable.WheelView_textColor, Color.BLACK)
-                _selectedTextColor= getColor(R.styleable.WheelView_selectedTextColor, Color.WHITE)
-                _animationduration = getFloat(R.styleable.WheelView_animationDuration,500f).toLong()
+                _mode = Mode.values()[getInt(R.styleable.WheelView_wheelMode, 0)]
+                _anchorAngle = getFloat(R.styleable.WheelView_wheelAnchorAngle, 270f)
+                _startAngle = getFloat(R.styleable.WheelView_wheelStartAngle, 0f)
+                _dividerStrokeWidth = getDimensionPixelSize(R.styleable.WheelView_wheelDividerStrokeWidth, dpToPx(12f)).toFloat()
+                _arcBackgroundColor = getColor(R.styleable.WheelView_wheelArcBackgroundColor, Color.parseColor("#F7F8FB"))
+                _selectedArcBackgroundColor = getColor(R.styleable.WheelView_wheelSelectedArcBackgroundColor, Color.parseColor("#48AEBF"))
+                _centerIconTint = getColor(R.styleable.WheelView_wheelCenterIconTint, Color.WHITE)
+                _centerIcon = getDrawable(R.styleable.WheelView_wheelCenterIcon)
+                _centerIconPadding = getDimensionPixelSize(R.styleable.WheelView_wheelCenterIconPadding, dpToPx(12f)).toFloat()
+                _textSize = getDimensionPixelSize(R.styleable.WheelView_wheelTextSize, dpToPx(14f))
+                _textColor = getColor(R.styleable.WheelView_wheelTextColor, Color.BLACK)
+                _selectedTextColor = getColor(R.styleable.WheelView_wheelSelectedTextColor, Color.WHITE)
+                _animationduration = getFloat(R.styleable.WheelView_wheelAnimationDuration, 500f).toLong()
             }
     }
 
@@ -84,11 +84,11 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
 
     var textSize
-    get() = _textSize
-    set(value) {
-        _textSize = value
-        refresh()
-    }
+        get() = _textSize
+        set(value) {
+            _textSize = value
+            refresh()
+        }
 
     var textColor
         get() = _textColor
