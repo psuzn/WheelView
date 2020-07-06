@@ -24,18 +24,25 @@ implementation 'com.github.psuzn:WheelView:0.1.0'
   
 #### Use a `WheelView`  in your layout.  
 ```xml  
-<me.sujanpoudel.wheelview.WheelView
-    android:id="@+id/wheel_view"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_margin="16dp"
-    app:anchorAngle="270"
-    app:centerIconPadding="16dp"
-    app:centerIconTint="#FFF"
-    app:mode="ANIMATE_TO_ANCHOR"
-    app:selectedArcBackgroundColor="#FE6447"
-    app:startAngle="315"
-    app:textSize="16sp" />
+  <me.sujanpoudel.wheelview.WheelView
+        android:id="@+id/wheel_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        app:wheelDividerStrokeWidth="16dp"
+        app:wheelArcBackgroundColor="#F7F8FB"
+        app:wheelSelectedArcBackgroundColor="#FE6447"
+        app:wheelCenterIcon="@drawable/ic_baseline_add_24"
+        app:wheelCenterIconPadding="16dp"
+        app:wheelCenterIconTint="@color/white"
+        app:wheelAnchorAngle="270"
+        app:wheelStartAngle="315"
+        app:wheelTextSize="16sp"
+        app:wheelSelectedTextColor="#FFF"
+        app:wheelTextColor="#000000"
+        app:wheelAnimationDuration="800"
+        app:wheelMode="ANIMATE_TO_ANCHOR"
+        />
 ```  
   
 #### Setup arc titles
@@ -54,26 +61,26 @@ You can customize following properties:
 <br />
 
 ```xml
-<me.sujanpoudel.wheelview.WheelView  
-  android:id="@+id/wheel_view"  
-  android:layout_width="match_parent"  
-  android:layout_height="match_parent"  
-  android:layout_margin="16dp"  
-  
-  app:dividerStrokeWidth="16dp"  
-  app:arcBackgroundColor="#F7F8FB"  
-  app:selectedArcBackgroundColor="#FE6447"  
-  app:centerIcon="@drawable/ic_baseline_add_24"  
-  app:centerIconPadding="16dp"  
-  app:centerIconTint="@color/white"  
-  app:anchorAngle="45"  
-  app:startAngle="315"  
-  app:textSize="16sp"  
-  app:selectedTextColor="#FFF"  
-  app:textColor="#000000"  
-  app:animationDuration="500"  
-  app:mode="ANIMATE_TO_ANCHOR|STATIC"  
-  />
+  <me.sujanpoudel.wheelview.WheelView
+        android:id="@+id/wheel_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+
+        app:wheelDividerStrokeWidth="16dp"
+        app:wheelArcBackgroundColor="#F7F8FB"
+        app:wheelSelectedArcBackgroundColor="#FE6447"
+        app:wheelCenterIcon="@drawable/ic_baseline_add_24"
+        app:wheelCenterIconPadding="16dp"
+        app:wheelCenterIconTint="@color/white"
+        app:wheelAnchorAngle="270"
+        app:wheelStartAngle="315"
+        app:wheelTextSize="16sp"
+        app:wheelSelectedTextColor="#FFF"
+        app:wheelTextColor="#000000"
+        app:wheelAnimationDuration="800"
+        app:wheelMode="ANIMATE_TO_ANCHOR"
+        />
 ```
 ##### 1.  Wheel Mode
 
@@ -88,43 +95,42 @@ The `WheelView` has  two [modes](#mode)
 ##### 1.  Arc Segment Divider Stroke Width 
 ```xml
 <me.sujanpoudel.wheelview.WheelView
-    app:dividerStrokeWidth="16dp" 
+    app:wheelDividerStrokeWidth="16dp"
     ...
    ```
 ##### 2.  Arc Segment Background Color
 ```xml
 <me.sujanpoudel.wheelview.WheelView
-  app:arcBackgroundColor="#F7F8FB"  
-  app:selectedArcBackgroundColor="#FE6447"  
+    app:wheelArcBackgroundColor="#F7F8FB"
+    app:wheelSelectedArcBackgroundColor="#FE6447"
   ...
    ```
 ##### 3. Center Icon  
 ```xml
 <me.sujanpoudel.wheelview.WheelView
-  app:centerIcon="@drawable/ic_baseline_add_24"  
-  app:centerIconPadding="16dp"  
-  app:centerIconTint="@color/white"  
+    app:wheelCenterIcon="@drawable/ic_baseline_add_24"
+    app:wheelCenterIconPadding="16dp"
+    app:wheelCenterIconTint="@color/white"
   ...
    ```
 
 ##### 4. Mode, Angle and Animation 
 ```xml
 <me.sujanpoudel.wheelview.WheelView
-  app:anchorAngle="45"  
-  app:startAngle="315"   
-  app:mode="ANIMATE_TO_ANCHOR|STATIC" 
-  app:animationDuration="500"   
+      app:wheelAnchorAngle="270"
+      app:wheelStartAngle="315"
+      app:wheelAnimationDuration="800"
+      app:wheelMode="ANIMATE_TO_ANCHOR|STATIC"
   ...
    ```
 ##### 4. Text 
 ```xml
 <me.sujanpoudel.wheelview.WheelView
- app:textSize="16sp"  
- app:selectedTextColor="#FFF"  
- app:textColor="#000000"    
+    app:wheelTextSize="16sp"
+    app:wheelSelectedTextColor="#FFF"
+    app:wheelTextColor="#000000"
   ...
    ```
-
 
 ## Bugs and Feedback  
 For bugs, questions and discussions please use the [Github Issues](https://github.com/psuzn/WheelView/issues/new).  

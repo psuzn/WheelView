@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-
         app:wheelDividerStrokeWidth="16dp"
         app:wheelArcBackgroundColor="#F7F8FB"
         app:wheelSelectedArcBackgroundColor="#FE6447"
