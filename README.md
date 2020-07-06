@@ -56,7 +56,7 @@ wheelView.titles = listOf("First", "Second", "Third", "Fourth")
 ## Customization
 You can customize following properties:
 
-<img src="https://drive.google.com/uc?export=view&id=1wxtKGuB-gYE7oRshBvlgbmtyR-gA82Wj" width="1000" />
+<img src="./info.svg" width="1000" />
 <br />
 <br />
 
