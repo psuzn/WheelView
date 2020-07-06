@@ -19,7 +19,7 @@ allprojects {
 ```  
 2. Add  dependency in the build.gradle:  
 ```  
-implementation 'com.github.psuzn:WheelView:0.1.0'  
+implementation 'com.github.psuzn:WheelView:1.0.0'
 ```  
   
 #### Use a `WheelView`  in your layout.  
