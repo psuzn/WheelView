@@ -316,6 +316,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         if (!event.inside(centerCircle.cx, centerCircle.cy, bgCircle.radius)) return // exclude clicks outside the large circle
         if (event.inside(centerCircle.cx, centerCircle.cy, centerCircle.radius)) { // check for the center circle first
             centerClickListener?.let { it() }
+            return
         }
         for ((index, arc) in arcs.withIndex()) { // check the arcs
             if (event.inside(arcRect, arc.startAngle, arc.sweepAngle)) {
