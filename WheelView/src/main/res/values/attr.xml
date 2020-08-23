@@ -17,5 +17,6 @@
             <enum name="ANIMATE_TO_ANCHOR" value="0" />
             <enum name="STATIC" value="1" />
         </attr>
+        <attr name="userInputMode" format="boolean" />
     </declare-styleable>
 </resources>

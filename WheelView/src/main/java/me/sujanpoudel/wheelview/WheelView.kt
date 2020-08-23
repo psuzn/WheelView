@@ -47,6 +47,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private var _animationduration: Long
     private var _centerIcon: Drawable?
     private var _titles = listOf<String>()
+    private var _userInputMode: Boolean
 
     init {
         context.theme.obtainStyledAttributes(attrs, R.styleable.WheelView, 0, 0)
@@ -64,6 +65,7 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 _textColor = getColor(R.styleable.WheelView_wheelTextColor, Color.BLACK)
                 _selectedTextColor = getColor(R.styleable.WheelView_wheelSelectedTextColor, Color.WHITE)
                 _animationduration = getFloat(R.styleable.WheelView_wheelAnimationDuration, 500f).toLong()
+                _userInputMode = getBoolean(R.styleable.WheelView_userInputMode, true)
             }
             .recycle()
     }
@@ -104,6 +106,12 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         set(value) {
             _selectedTextColor = value
             refresh()
+        }
+
+    var userInputMode
+        get() = _userInputMode
+        set(value) {
+            _userInputMode = value
         }
 
     var startAngle
@@ -328,7 +336,8 @@ class WheelView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return gestureDetector.onTouchEvent(event)
+        return if (_userInputMode) gestureDetector.onTouchEvent(event)
+        else super.onTouchEvent(event)
     }
 
 }
